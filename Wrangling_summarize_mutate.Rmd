@@ -146,7 +146,6 @@ movies_ln128 <- movies %>%
 movies_ln128
 ```
 
-# Question 5
 ## Putting it together
 
 Now that we have a bunch of wrangling skills, let's put them together. 
@@ -157,11 +156,20 @@ Now that we have a bunch of wrangling skills, let's put them together.
 
 To accomplish that last task, we need a specialty function, `n`. Here's how it works
 
-```{r}
-movies %>%
-  summarize(n())
-```
+# Question 5 
 
+A low rating is less than 5 and votes will be greater than 5. Filtering to look at votes and rating will give us all the movies that we consider to be low rating. With this we now have to find what the percentage is.
+
+```{r}
+movies_ln144 <- movies %>%
+  filter(rating <= 5 & votes > 5)%>%
+  select(rating,votes,title) %>%
+  summarize(Bdmvs = n())
+movies_ln144
+```
+14,528 movies are considered low rating.
+
+# Side Questions
 - what is the average length of movies in the dataset, in hours? 
 - can you find a second way to compute the average length, by flipping the order of commands (i.e., `summarize` first and then `mutate`)?
 
@@ -175,3 +183,5 @@ summarize(average_length_hours_mutate = mean(length_hours))
 average_length_hours
 average_length_hours_flipped
 ```
+
+The new data sets of average_length_hours and average_length_hours_flipped demonstrate that it was possible to flip both the mutate and summarize data sets. In my opinion, employing mutate first yields a more straightforward response because it provides the average length in hours immediately upon request, but using summarize first, followed by mutate, reveals the steps that resulted in the data, which might be useful for monitoring progress.
