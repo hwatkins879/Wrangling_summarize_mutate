@@ -77,6 +77,7 @@ movies_lin71
 
 Films produced in 1893 are the oldest on this list. Movies are typically 82 minutes and 34 seconds long. Despite this, there is a standard deviation of roughly 35 seconds and 44 minutes. 
 
+# Question 2
 
 ## group_by
 
@@ -86,14 +87,19 @@ This is useful if want to compute summary statistics by group. For example, we m
 
 We already know how to compute the average length of movies overall. What we need to add to our pipeline is a `group_by`
 
-```{r eval=FALSE}
-movies %>%
+```{r eval=TRUE}
+movies_ln84<-movies %>%
   group_by(Action) %>%
+  summarize(mean(length),sd(length),min(year))
   # move your summarize code from the last exercise here!
+movies_ln84
 ```
 
 Which movies are longer, action movies or non-action movies? 
 
+Generally speaking, action films are longer than non-action films, with average durations of around 100 minutes as opposed to 81 minutes. The difference between the two is also evident in the standard deviation, which is lower for action films and is closer to 100 minutes, whereas non-action films fluctuate more in run duration.
+
+# Question 3
 ### Your turn
 
 Investigate the movies classified as Short. Are they actually shorter than other movies? 
@@ -101,12 +107,14 @@ Investigate the movies classified as Short. Are they actually shorter than other
 - What is the average length? 
 - What is the minimum length?
 
-```{r eval=FALSE}
-movies %>%
-  group_by(# fill in some commands here!) %>%
-  summarize(# fill in some commands here!)
+```{r eval=TRUE}
+movies_ln99<-movies %>%
+  group_by(Short) %>%
+  summarize(mean(length),min(length))
+movies_ln99
 ```
 
+The average length of a non-short film is approximately 95 minutes, but the average length of a short film is nearly 14 minutes. It is interesting to note that the minimum duration of a film is one minute, which is the same for both short and non-short films.
 
 ## mutate
 
@@ -119,6 +127,7 @@ movies <- movies %>%
   mutate(length_hrs = length / 60)
 ```
 
+
 Let's read this code carefully. 
 
 - what does the `<-` do?
@@ -126,15 +135,18 @@ Let's read this code carefully.
 - what does the `=` do?
 - why did we use the name `length_hrs`?
 
+# Question 4
 ### Your turn
 
 The variables `r1`, `r2`, ..., `r10` give you the percent of people who rated that movie a 1, 2, ..., 10. We would like to know the percent of people who rated the movie a 4 or less (i.e., who rated it a 1, 2, 3, or 4). Create a new variable called `per_low` that computes that number.
 
-```{r eval=FALSE}
-movies <- movies %>%
-  mutate(per_low = # fill in some commands here!)
+```{r eval=TRUE}
+movies_ln128 <- movies %>%
+  mutate(per_low = r1+r2+r3+r4)
+movies_ln128
 ```
 
+# Question 5
 ## Putting it together
 
 Now that we have a bunch of wrangling skills, let's put them together. 
@@ -153,3 +165,13 @@ movies %>%
 - what is the average length of movies in the dataset, in hours? 
 - can you find a second way to compute the average length, by flipping the order of commands (i.e., `summarize` first and then `mutate`)?
 
+```{r}
+average_length_hours <- movies %>%
+summarize(average_length = mean(length)) %>%
+mutate(average_length_hours_summarize = average_length / 60)
+average_length_hours_flipped <- movies %>%
+mutate(length_hours = length / 60) %>%
+summarize(average_length_hours_mutate = mean(length_hours))
+average_length_hours
+average_length_hours_flipped
+```
