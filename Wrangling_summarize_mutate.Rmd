@@ -1,7 +1,7 @@
 ---
 title: "Data Wrangling - Part II"
 subtitle: "StatPREP R Workshops"
-author: "Your Name here"
+author: "Hailey Watkins"
 output: html_document
 ---
 
@@ -57,21 +57,26 @@ movies %>%
   drop_na(budget) %>%
   summarize(avg_budget = mean(budget), max_budget = max(budget))
 ```
-
+# Question 1
 ### Your turn
 
 Now, you try it! 
 
-- What year was the earliest movie in the dataset released? 
-- What is the average length of movies?
+- What year was the earliest movie in the dataset released?  
+- What is the average length of movies? 
 - What is the standard deviation of length?
 
 You may want to look at the "data transformation with dplyr" cheatsheet to review some possible summary functions. 
 
-```{r eval=FALSE}
-movies %>%
-  summarize(# fill in some commands here!)
+```{r eval=TRUE}
+movies_lin71<-movies %>%
+  summarize(mean(length),sd(length),min(year))
+movies_lin71
 ```
+
+
+Films produced in 1893 are the oldest on this list. Movies are typically 82 minutes and 34 seconds long. Despite this, there is a standard deviation of roughly 35 seconds and 44 minutes. 
+
 
 ## group_by
 
